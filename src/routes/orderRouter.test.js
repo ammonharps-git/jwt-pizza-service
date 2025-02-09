@@ -72,7 +72,7 @@ test("createOrder", async () => {
   franchise = franchises.filter((item) => item.name === franchiseData.name)[0];
 
   const orderData = {
-    franchiseId: franchise.id,
+    franchiseId: 1,
     storeId: 1,
     items: [{ menuId: 1, description: "Veggie", price: 0.05 }],
   };
