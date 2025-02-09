@@ -74,7 +74,7 @@ test("createOrder", async () => {
   // Create order as a non-authenticated user
   const res = await request(app)
     .post("/api/order")
-    .set("Authorization", `Bearer ${testUserAuthToken}`)
+    .set("Authorization", `Bearer ${adminToken}`)
     .send(orderData);
 
   expect(res.status).toBe(200);
