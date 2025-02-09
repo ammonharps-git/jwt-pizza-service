@@ -41,8 +41,32 @@ beforeEach(async () => {
 });
 
 test("createOrder", async () => {
+  const franchiseData = {
+    name: "pizzaCreateTest",
+    admins: [{ email: testAdminUser.email }],
+  };
+
+  // Create franchise as an admin user
+  const createRes = await request(app)
+    .post("/api/franchise")
+    .set("Authorization", `Bearer ${adminToken}`)
+    .send(franchiseData);
+
+  const getRes = await request(app).get("/api/franchise").send(franchiseData);
+  const franchises = getRes.body;
+  const franchise = franchises.filter(
+    (item) => item.name === franchiseData.name
+  )[0];
+
+  const storeData = { franchiseId: franchise.id, name: "Test Store" };
+
+  const createStoreAdminRes = await request(app)
+    .post(`/api/franchise/${franchise.id}/store`)
+    .set("Authorization", `Bearer ${adminToken}`)
+    .send(storeData);
+
   const orderData = {
-    franchiseId: 1,
+    franchiseId: franchise.id,
     storeId: 1,
     items: [{ menuId: 1, description: "Veggie", price: 0.05 }],
   };
