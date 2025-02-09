@@ -114,7 +114,9 @@ orderRouter.post(
   authRouter.authenticateToken,
   asyncHandler(async (req, res) => {
     const orderReq = req.body;
+    console.log("orderReq:", orderReq); // testing
     const order = await DB.addDinerOrder(req.user, orderReq);
+    console.log("order:", order); // testing
     const r = await fetch(`${config.factory.url}/api/order`, {
       method: "POST",
       headers: {
@@ -126,8 +128,9 @@ orderRouter.post(
         order,
       }),
     });
+    console.log("r:", r); // testing
     const j = await r.json();
-    console.log(j); // testing
+    console.log("j:", j); // testing
     if (r.ok) {
       res.send({ order, reportSlowPizzaToFactoryUrl: j.reportUrl, jwt: j.jwt });
     } else {
