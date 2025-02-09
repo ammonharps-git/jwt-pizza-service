@@ -34,7 +34,7 @@ beforeEach(async () => {
   const franchises = getRes.body;
   // Delete franchise as an admin user
   for (const franchise of franchises) {
-    const adminDeleteRes = await request(app)
+    await request(app)
       .delete(`/api/franchise/${franchise.id}`)
       .set("Authorization", `Bearer ${adminToken}`);
   }
@@ -47,7 +47,7 @@ test("getFranchises", async () => {
   };
 
   // Create franchise
-  const createRes = await request(app)
+  await request(app)
     .post("/api/franchise")
     .set("Authorization", `Bearer ${adminToken}`)
     .send(franchiseData);
@@ -69,7 +69,7 @@ test("getUserFranchises", async () => {
   };
 
   // Create franchise
-  const createRes = await request(app)
+  await request(app)
     .post("/api/franchise")
     .set("Authorization", `Bearer ${adminToken}`)
     .send(franchiseData);
@@ -114,7 +114,7 @@ test("deleteFranchise", async () => {
   };
 
   // Create franchise as an admin user
-  const createRes = await request(app)
+  await request(app)
     .post("/api/franchise")
     .set("Authorization", `Bearer ${adminToken}`)
     .send(franchiseData);

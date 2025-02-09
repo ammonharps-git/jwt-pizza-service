@@ -34,7 +34,7 @@ beforeEach(async () => {
   const franchises = getRes.body;
   // Delete franchise as an admin user
   for (const franchise of franchises) {
-    const adminDeleteRes = await request(app)
+    await request(app)
       .delete(`/api/franchise/${franchise.id}`)
       .set("Authorization", `Bearer ${adminToken}`);
   }
