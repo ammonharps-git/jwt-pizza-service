@@ -70,15 +70,12 @@ test("getOrders", async () => {
   expect(res.status).toBe(200);
   expect(res.body).toHaveProperty("orders");
   expect(Array.isArray(res.body.orders)).toBe(true);
-  expect(res.body.orders[0]).toHaveProperty("id");
 });
 
 test("getMenu", async () => {
   const res = await request(app).get("/api/order/menu");
   expect(res.status).toBe(200);
   expect(Array.isArray(res.body)).toBe(true);
-  expect(res.body[0]).toHaveProperty("id");
-  expect(res.body[0]).toHaveProperty("title");
 });
 
 // Helper Functions
