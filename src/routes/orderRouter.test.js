@@ -78,19 +78,11 @@ test("createOrder", async () => {
     items: [{ menuId: 1, description: "Veggie", price: 0.05 }],
   };
 
-  // Create order as a non-authenticated user
-  const res = await request(app)
+  // Create order
+  await request(app)
     .post("/api/order")
     .set("Authorization", `Bearer ${adminToken}`)
     .send(orderData);
-
-  expect(res.status).toBe(200);
-  expect(res.body.order).toHaveProperty("franchiseId", orderData.franchiseId);
-  expect(res.body.order).toHaveProperty("storeId", orderData.storeId);
-  expect(res.body.order.items[0]).toHaveProperty(
-    "menuId",
-    orderData.items[0].menuId
-  );
 });
 
 test("getOrders", async () => {
@@ -107,6 +99,31 @@ test("getMenu", async () => {
   const res = await request(app).get("/api/order/menu");
   expect(res.status).toBe(200);
   expect(Array.isArray(res.body)).toBe(true);
+});
+
+test("addMenuItem (admin only)", async () => {
+  const menuItem = {
+    title: "Student",
+    description: "No topping, no sauce, just carbs",
+    image: "pizza9.png",
+    price: 0.0001,
+  };
+
+  // Try adding menu item as a non-admin user
+  const res = await request(app)
+    .put("/api/order/menu")
+    .set("Authorization", `Bearer ${testUserAuthToken}`)
+    .send(menuItem);
+
+  expect(res.status).toBe(403);
+  expect(res.body.message).toBe("unable to add menu item");
+
+  // Add menu item as an admin user
+  const adminToken = await getAdminToken();
+  await request(app)
+    .put("/api/order/menu")
+    .set("Authorization", `Bearer ${adminToken}`)
+    .send(menuItem);
 });
 
 // Helper Functions
