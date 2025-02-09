@@ -113,7 +113,6 @@ orderRouter.post(
   "/",
   authRouter.authenticateToken,
   asyncHandler(async (req, res) => {
-    console.log("req:", req); // testing
     const orderReq = req.body;
     console.log("orderReq:", orderReq); // testing
     const order = await DB.addDinerOrder(req.user, orderReq);

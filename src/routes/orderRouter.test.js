@@ -42,7 +42,7 @@ beforeEach(async () => {
 
 test("createOrder", async () => {
   const franchiseData = {
-    name: "pizzaCreateTest",
+    name: "createOrderTest",
     admins: [{ email: testAdminUser.email }],
   };
 
@@ -52,9 +52,9 @@ test("createOrder", async () => {
     .set("Authorization", `Bearer ${adminToken}`)
     .send(franchiseData);
 
-  const getRes = await request(app).get("/api/franchise").send(franchiseData);
-  const franchises = getRes.body;
-  const franchise = franchises.filter(
+  let getRes = await request(app).get("/api/franchise").send(franchiseData);
+  let franchises = getRes.body;
+  let franchise = franchises.filter(
     (item) => item.name === franchiseData.name
   )[0];
 
@@ -65,9 +65,16 @@ test("createOrder", async () => {
     .set("Authorization", `Bearer ${adminToken}`)
     .send(storeData);
 
+  // I think the problem relates to the store id? Check it?
+
+  getRes = await request(app).get("/api/franchise").send(franchiseData);
+  franchises = getRes.body;
+  franchise = franchises.filter((item) => item.name === franchiseData.name)[0];
+  const storeID = franchise.stores[0].id;
+
   const orderData = {
     franchiseId: franchise.id,
-    storeId: 1,
+    storeId: storeID,
     items: [{ menuId: 1, description: "Veggie", price: 0.05 }],
   };
 
