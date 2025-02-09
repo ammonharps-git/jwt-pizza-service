@@ -70,11 +70,10 @@ test("createOrder", async () => {
   getRes = await request(app).get("/api/franchise").send(franchiseData);
   franchises = getRes.body;
   franchise = franchises.filter((item) => item.name === franchiseData.name)[0];
-  const storeID = franchise.stores[0].id;
 
   const orderData = {
     franchiseId: franchise.id,
-    storeId: storeID,
+    storeId: 1,
     items: [{ menuId: 1, description: "Veggie", price: 0.05 }],
   };
 
