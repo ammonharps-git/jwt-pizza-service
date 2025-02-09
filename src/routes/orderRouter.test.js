@@ -47,7 +47,7 @@ test("createOrder", async () => {
   };
 
   // Create franchise as an admin user
-  const createRes = await request(app)
+  await request(app)
     .post("/api/franchise")
     .set("Authorization", `Bearer ${adminToken}`)
     .send(franchiseData);
@@ -60,7 +60,7 @@ test("createOrder", async () => {
 
   const storeData = { franchiseId: franchise.id, name: "Test Store" };
 
-  const createStoreAdminRes = await request(app)
+  await request(app)
     .post(`/api/franchise/${franchise.id}/store`)
     .set("Authorization", `Bearer ${adminToken}`)
     .send(storeData);
