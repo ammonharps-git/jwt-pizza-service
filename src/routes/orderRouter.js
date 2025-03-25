@@ -10,7 +10,7 @@ const metrics = require("../metrics.js");
 const orderRouter = express.Router();
 
 // Logging
-Logger = require("pizza-logger");
+const Logger = require("pizza-logger");
 const logger = new Logger(config);
 
 orderRouter.endpoints = [

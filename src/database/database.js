@@ -6,7 +6,7 @@ const { Role } = require("../model/model.js");
 const dbModel = require("./dbModel.js");
 
 // Logging
-Logger = require("pizza-logger");
+const Logger = require("pizza-logger");
 const logger = new Logger(config);
 class DB {
   constructor() {
