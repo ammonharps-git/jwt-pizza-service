@@ -6,10 +6,13 @@ const version = require("./version.json");
 const config = require("./config.js");
 
 const { sendMetricsPeriodically, requestTracker } = require("./metrics");
+const Logger = require("pizza-logger");
+const logger = new Logger(config);
 
 const app = express();
 
 app.use(requestTracker); // Metrics middleware
+app.use(logger.httpLogger); // Logging middleware
 app.use(express.json());
 app.use(setAuthUser);
 app.use((req, res, next) => {
