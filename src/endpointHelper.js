@@ -1,5 +1,6 @@
 // Logging
 Logger = require("pizza-logger");
+const config = require("./config.js");
 const logger = new Logger(config);
 
 class StatusCodeError extends Error {
